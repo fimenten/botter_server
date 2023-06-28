@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # COPY server.py crypto_exchange.db ./
 
 # Expose the port that the server will listen on
-EXPOSE 5000
+EXPOSE 893
 
 # Run the server script when the container starts
 CMD ["python", "app.py"]

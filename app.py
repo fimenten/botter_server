@@ -1,11 +1,40 @@
 from flask import Flask, request, jsonify
 import sqlite3
 import uuid
-import time
+import time,logging,json
+
+# Configure logging
+logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+
+def log_request(request):
+    request_data = {
+        'method': request.method,
+        'url': request.url,
+        'headers': dict(request.headers),
+        'body': request.get_json()
+    }
+    logging.info('Incoming Request: %s', json.dumps(request_data))
+
+def log_response(response):
+    response_data = {
+        'status_code': response.status_code,
+        'headers': dict(response.headers),
+        'body': response.get_json()
+    }
+    logging.info('Outgoing Response: %s', json.dumps(response_data))
+
 
 app = Flask(__name__)
 DATABASE = 'crypto_exchange.db'
+# Add logging middleware to log requests and responses
+@app.before_request
+def before_request():
+    log_request(request)
 
+@app.after_request
+def after_request(response):
+    log_response(response)
+    return response
 def fetch_active_orders(strategy_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -150,4 +179,4 @@ def get_active_orders():
 
 if __name__ == '__main__':
     create_orders_table()
-    app.run(debug=True)
+    app.run(debug=False,port=893)
