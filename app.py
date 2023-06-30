@@ -176,6 +176,48 @@ def get_active_orders():
         }
         return jsonify(response), 500
 
+@app.route('/filterOrders', methods=['POST'])
+def filter_orders():
+    try:
+        data = request.get_json()
+        strategy_id = data.get('strategy_id')
+        active_filter = data.get('active', False)
+        exchange_filter = data.get('exchange')
+        ticker_filter = data.get('ticker')
+
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        query = '''SELECT id FROM orders WHERE strategy_id = ?'''
+        params = [strategy_id]
+
+        if active_filter:
+            query += " AND status = 'active'"
+        if exchange_filter:
+            query += " AND exchange = ?"
+            params.append(exchange_filter)
+        if ticker_filter:
+            query += " AND ticker = ?"
+            params.append(ticker_filter)
+
+        cursor.execute(query, params)
+
+        filtered_order_ids = [row[0] for row in cursor.fetchall()]
+
+        cursor.close()
+        conn.close()
+
+        response = {
+            'filtered_order_ids': filtered_order_ids
+        }
+
+        return jsonify(response)
+    except Exception as e:
+        response = {
+            'success': False,
+            'message': str(e)
+        }
+        return jsonify(response), 500
 
 if __name__ == '__main__':
     create_orders_table()
