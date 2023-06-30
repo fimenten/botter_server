@@ -1,44 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Crypto Exchange Orders</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Crypto Exchange Orders</h1>
+  <h1>Orders</h1>
 
-  <div class="filter-container">
-    <h2>Filter Orders</h2>
-    <div class="input-group">
+  <form id="filter-form">
+    <div>
+      <label for="strategy-id-input">Strategy ID:</label>
+      <input type="text" id="strategy-id-input" required>
+    </div>
+    <div>
       <label for="active-filter">Active:</label>
       <input type="checkbox" id="active-filter">
     </div>
-    <div class="input-group">
+    <div>
       <label for="exchange-filter">Exchange:</label>
       <input type="text" id="exchange-filter">
     </div>
-    <div class="input-group">
+    <div>
       <label for="ticker-filter">Ticker:</label>
       <input type="text" id="ticker-filter">
     </div>
-    <button id="filter-btn">Filter</button>
-  </div>
+    <div>
+      <button type="submit">Filter</button>
+    </div>
+  </form>
 
   <table id="orders-table">
     <thead>
       <tr>
         <th>Order ID</th>
-        <th>Exchange</th>
-        <th>Ticker</th>
-        <th>Side</th>
-        <th>Size</th>
-        <th>Order Type</th>
-        <th>Status</th>
-        <th>Received Timestamp</th>
-        <th>Send Datetime</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="orders-table-body"></tbody>
   </table>
 
   <script src="app.js"></script>
