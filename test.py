@@ -10,7 +10,10 @@ req = requests.post(json=
         strategy_id = "fuck me",
         send_datetime = "test"
     ),
+    # url="http://118.27.5.63:893/postOrder/",
+    # port
     url="http://127.0.0.1:893/postOrder"
+    
 )
 
 

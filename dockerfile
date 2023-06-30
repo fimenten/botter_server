@@ -4,6 +4,8 @@ FROM python:3.9-slim-buster
 # WORKDIR /app
 
 # Copy the requirements file into the container
+COPY . /app
+WORKDIR /app
 COPY requirements.txt .
 
 # Install the required Python packages
