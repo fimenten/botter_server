@@ -188,7 +188,7 @@ def filter_orders():
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
 
-        query = '''SELECT id FROM orders WHERE strategy_id = ?'''
+        query = '''SELECT id FROM orders WHERE 1=1'''
         params = [strategy_id]
 
         if active_filter:

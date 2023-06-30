@@ -7,6 +7,6 @@ PORT = 8000
 # Create a simple HTTP server to host the files
 Handler = http.server.SimpleHTTPRequestHandler
 
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
+with socketserver.TCPServer(("", PORT), Handler,bind_and_activate=True) as httpd:
     print("Server running at http://0.0.0.0:{}".format(PORT))
     httpd.serve_forever()
